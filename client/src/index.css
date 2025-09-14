@@ -9,3 +9,10 @@
 @theme{
   --color-primary:#5044E5;
 }
+
+body {
+  background-image: url('/gradientBackground.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* opsiyonel: sabit dursun */
+}

@@ -1,12 +1,14 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { assets } from '../assets/assets'
+import { AiToolsData, assets } from '../assets/assets'
 
+
+//bg-[url(/gradientBackground.jpg)] bg-cover bg-no-repeat
 const Hero = () => {
     const navigate=useNavigate()
   return (
     <div className='px-4 sm:px-20 xl:px-32 relative inline-flex
-     flex-col w-full justify-center bg-[url(/gradientBackground.jpg)] bg-cover bg-no-repeat min-h-screen '>
+     flex-col w-full justify-center  min-h-screen '> 
       
       <div className='text-center mb-6'>
         <h1 className='text-3xl sm:text-5xl md:text-6xl 2xl:text-7xl
@@ -25,6 +27,7 @@ const Hero = () => {
       <div className='flex items-center gap-4 mt-8 mx-auto text-gray-600'>
         <img src={assets.usergroup} alt="" className='h-8' />Trusted by 10k+ people
       </div>
+     
     </div>
   )
 }
