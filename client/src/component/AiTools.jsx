@@ -10,12 +10,12 @@ const AiTools = () => {
   return (
     <div className='px-4 sm:px-20 xl:px-32 my-24 '>
       <div className='text-center'>
-        <h2 className='text-slate-700 text-[42px] font-semibold'>Powerful AI Tools</h2>
+        <h2 className='text-slate-800 text-[52px] font-semibold'>Powerful AI Tools</h2>
         <p className='text-gray-500 max-w-lg mx-auto'>
           Everything you need to create, enhance, and optimize your content with cutting-edge AI technology.
         </p>
       </div>
-   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-10">
+   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-20">
   {AiToolsData.map((tool, index) => (
     <div
       key={index}
@@ -24,7 +24,7 @@ const AiTools = () => {
       onClick={() => user && navigate(tool.path)}
     >
       <tool.icon
-        className="w-12 h-12 p-3 text-white rounded-xl"
+        className="w-15 h-12 p-3 text-white rounded-xl"
         style={{ background: `linear-gradient(to bottom, ${tool.bg.from}, ${tool.bg.to})` }}
       />
       <h3 className="mt-6 mb-3 text-lg font-semibold">{tool.title}</h3>
