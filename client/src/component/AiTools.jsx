@@ -23,7 +23,7 @@ const AiTools = () => {
       hover:-translate-y-1 transition-all duration-300 cursor-pointer"
       onClick={() => user && navigate(tool.path)}
     >
-      <tool.icon
+      <tool.Icon
         className="w-15 h-12 p-3 text-white rounded-xl"
         style={{ background: `linear-gradient(to bottom, ${tool.bg.from}, ${tool.bg.to})` }}
       />
