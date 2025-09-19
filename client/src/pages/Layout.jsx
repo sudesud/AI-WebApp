@@ -14,7 +14,7 @@ const {user} =useUser()
   return user ?(
     <div className='flex bg-white flex-col items-start justify-start h-screen'>
       <nav className='w-full px-8 min-h-14 flex items-center justify-between border-b border-gray-200'>
-        <img className='w-30' src={assets.logo} alt="logo" onClick={()=>navigate('/')}  />
+        <img className='w-20 sm:w-34 cursor-pointer' src={assets.logo} alt="logo" onClick={()=>navigate('/')}  />
         {
             sidebar ? <X onClick={()=>setSidebar(false)} className='w-6 h-6 text-gray-600 sm:hidden'/>
             :<Menu  onClick={()=>setSidebar(true)} className='w-6 h-6 text-gray-600 sm:hidden'/>
