@@ -15,6 +15,7 @@ const Dashboard = () => {
   useEffect(()=>{
     getDashboardData()
   },[])
+  
   return (
     <div className='h-full overflow-y-scroll p-6'>
       <div className='flex justify-start gap-4 flex-wrap'>
