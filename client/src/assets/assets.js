@@ -3,7 +3,7 @@ import usergroup from './user-group.png'
 import {SquarePen,Hash,Image,Eraser,Scissors,FileText} from 'lucide-react'
 
 
-
+// 21.8
 
 export const assets={
     logo,
@@ -53,5 +53,52 @@ export const AiToolsData = [
     Icon: FileText,
     bg: { from: '#12B7AC', to: '#08B6CE' },
     path: '/ai/review-resume',
+  }
+];
+
+export const dummyCreationData = [
+  {
+    "id": 9,
+    "user_id": "user_2yMX02PRbyMtQK6PebpjnxvRNIA",
+    "prompt": "Generate a blog title for the keyword blog in the category Technology.",
+    "content": "Here are a few blog title options for a technology blog:\n\n*General & Broad:\n- The Tech Blog: News, Reviews, and Insights\n- Technology Today: Your Daily Dose of Tech\n- The Future is Now: Exploring the World of Technology\n- Tech Talk: Unpacking the Latest Innovations\n\nSpecific & Intriguing:*\n- Decoding Tech: Making Sense of the Digital World\n- Beyond the Gadgets: The",
+    "type": "blog-title",
+    "publish": false,
+    "likes": [],
+    "created_at": "2025-07-01T11:09:50.492Z",
+    "updated_at": "2025-07-01T11:09:50.492Z"
+  },
+  {
+    "id": 8,
+    "user_id": "user_2yMX02PRbyMtQK6PebpjnxvRNIA",
+    "prompt": "Generate a blog title for the keyword blog in the category General.",
+    "content": "Here are a few blog title options for a blog in the General category:\n\n- Everyday Stories: Life, People, and More\n- The Daily Journal: Thoughts & Perspectives\n- Exploring the Ordinary: Blogs of Daily Wonders\n- Beyond Routine: Stories from Everyday Life",
+    "type": "blog-title",
+    "publish": false,
+    "likes": [],
+    "created_at": "2025-07-01T11:12:10.123Z",
+    "updated_at": "2025-07-01T11:12:10.123Z"
+  },
+  {
+    "id": 7,
+    "user_id": "user_2yMX02PRbyMtQK6PebpjnxvRNIA",
+    "prompt": "Generate a blog title for the keyword blog in the category Travel.",
+    "content": "Here are a few blog title options for a travel blog:\n\n- Wanderlust Diaries: Exploring the World\n- The Globe Trekker Blog: Adventures Across Continents\n- Hidden Gems: Discovering the Unseen Places\n- Beyond Borders: A Traveler’s Perspective",
+    "type": "blog-title",
+    "publish": false,
+    "likes": [],
+    "created_at": "2025-07-01T11:15:00.789Z",
+    "updated_at": "2025-07-01T11:15:00.789Z"
+  },
+  {
+    "id": 6,
+    "user_id": "user_2yMX02PRbyMtQK6PebpjnxvRNIA",
+    "prompt": "Generate a blog title for the keyword blog in the category Food.",
+    "content": "Here are a few blog title options for a food blog:\n\n- The Tasty Journal: Recipes and Reviews\n- Beyond the Plate: Food Stories & Flavors\n- Kitchen Chronicles: Cooking Made Simple\n- Bite by Bite: A Food Lover’s Blog",
+    "type": "blog-title",
+    "publish": false,
+    "likes": [],
+    "created_at": "2025-07-01T11:18:45.456Z",
+    "updated_at": "2025-07-01T11:18:45.456Z"
   }
 ];

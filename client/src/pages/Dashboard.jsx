@@ -1,13 +1,15 @@
 import { Protect } from '@clerk/clerk-react'
 import {  Gem, Sparkles } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import CreationItem from '../component/CreationItem'
+import { dummyCreationData } from '../assets/assets'
 
 const Dashboard = () => {
 
   const [creations,setCreations]=useState([])
 
   const getDashboardData=async ()=>{
-      setCreations(dumm)
+      setCreations(dummyCreationData)
   }
 
   useEffect(()=>{
@@ -38,6 +40,13 @@ const Dashboard = () => {
                 <Gem className='w-5 text-white'/>
               </div>
         </div>
+      </div>
+
+      <div className='space-y-3'>
+        <p className='mt-6 mb-4'>Recent Creations</p>
+        {
+          creations.map((item)=><CreationItem key={item.id} item={item}/> )
+        }
       </div>
     </div>
   )
