@@ -25,3 +25,4 @@ dist-ssr
 
 # Client env
 client/.env
+.env
