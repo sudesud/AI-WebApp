@@ -1,13 +1,23 @@
 import logo from './logo.png'
 import usergroup from './user-group.png'
 import {SquarePen,Hash,Image,Eraser,Scissors,FileText} from 'lucide-react'
+import ai_gen_img_1 from './ai_gen_img_1.jpeg'
+import ai_gen_img_2 from './ai_gen_img_2.jpeg'
+import ai_gen_img_3 from './ai_gen_img_3.jpg'
+import ai_gen_img_4 from './ai_gen_img_4.jpg'
+import ai_gen_img_5 from './ai_gen_img_5.jpeg'
 
 
-// 21.8
+// 21.8   
 
 export const assets={
     logo,
-    usergroup
+    usergroup,
+    ai_gen_img_1,
+    ai_gen_img_2,
+    ai_gen_img_3,
+    ai_gen_img_4,
+    ai_gen_img_5
     
 }
 
@@ -100,5 +110,81 @@ export const dummyCreationData = [
     "likes": [],
     "created_at": "2025-07-01T11:18:45.456Z",
     "updated_at": "2025-07-01T11:18:45.456Z"
+  }
+
+
+ 
+];
+
+export const dummyPublishedCreationData = [
+  {
+    "id": 1,
+    "user_id": "user_1AbCdEfGhIjKlMnOpQrSt",
+    "prompt": "Generate an image of a futuristic city skyline in 2500 with flying cars, cyberpunk theme.",
+    "content": ai_gen_img_1,
+    "type": "image",
+    "publish": true,
+    "likes": [
+      "user_XYZ123",
+      "user_ABC456"
+    ],
+    "created_at": "2025-06-18T10:12:30.111Z",
+    "updated_at": "2025-06-18T12:20:50.220Z"
+  },
+  {
+    "id": 2,
+    "user_id": "user_2yMX02PRbyMtQK6PebpjnxvRNIA",
+    "prompt": "Generate an image of A Boy Riding a bicycle on road and bicycle is from year 2201 in the style Anime style.",
+    "content": ai_gen_img_2,
+    "type": "image",
+    "publish": true,
+    "likes": [
+      "user_2yMX02PRbyMtQK6PebpjnxvRNIA",
+      "user_2yaW5EHzeDfQbXdAJWYFnZo2bje"
+    ],
+    "created_at": "2025-06-19T08:16:54.614Z",
+    "updated_at": "2025-06-19T09:58:40.072Z"
+  },
+  {
+    "id": 3,
+    "user_id": "user_7RtUvWxYz123456",
+    "prompt": "Create a digital painting of a dragon flying over snowy mountains in a fantasy world.",
+    "content": ai_gen_img_3,
+    "type": "image",
+    "publish": true,
+    "likes": [
+      "user_LMN789",
+      "user_DEF101"
+    ],
+    "created_at": "2025-06-20T07:22:10.314Z",
+    "updated_at": "2025-06-20T08:45:33.912Z"
+  },
+  {
+    "id": 4,
+    "user_id": "user_A1B2C3D4E5F6",
+    "prompt": "Generate an oil painting style image of a peaceful village beside a river during sunset.",
+    "content": ai_gen_img_4,
+    "type": "image",
+    "publish": true,
+    "likes": [
+      "user_ZYX999"
+    ],
+    "created_at": "2025-06-21T11:11:11.111Z",
+    "updated_at": "2025-06-21T12:12:12.222Z"
+  },
+  {
+    "id": 5,
+    "user_id": "user_QWERTY123456",
+    "prompt": "Generate a 3D render of a space station orbiting around Saturn with astronauts outside.",
+    "content": ai_gen_img_5,
+    "type": "image",
+    "publish": true,
+    "likes": [
+      "user_HJK789",
+      "user_OPQ321",
+      "user_RST654"
+    ],
+    "created_at": "2025-06-22T14:30:00.500Z",
+    "updated_at": "2025-06-22T16:00:45.750Z"
   }
 ];
