@@ -1,0 +1,12 @@
+# Genel
+node_modules
+dist
+*.log
+.DS_Store
+
+# Ortak .env dosyaları
+.env
+
+# Client ve Server .env dosyaları
+client/.env
+server/.env
