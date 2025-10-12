@@ -1,15 +1,18 @@
 import { OpenAI } from 'openai'
 import sql from '../configs/db.js';
+import { clerkClient } from '@clerk/express';
 
-const AI =  new OpenAI(
-    api_key=process.env.OPENAI_API_KEY,
-    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
-)
+
+
+const AI = new OpenAI({
+    apiKey: process.env.GEMINI_API_KEY,
+    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
+});
 
 export const generateArticle=async(req,res)=>{
     try {
         const {userId}=req.auth();
-        const {prompt,lenght}=req.body;
+        const {prompt,length}=req.body;
         const {plan}=req.plan;
         const free_usage=req.free_usage;
         
@@ -26,7 +29,7 @@ export const generateArticle=async(req,res)=>{
         },
     ],
     temperature:0.7,
-    max_tokens:lenght,
+    max_tokens:length,
 });
     const content =response.choices[0].message.content;
     await sql `INSERT INTO creations (user_id,prompt,content,type) VALUES (${userId},${prompt},${content},'article')`

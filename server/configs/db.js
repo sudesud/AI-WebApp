@@ -1,5 +1,16 @@
-import {neon} from '@neondatabase/serverless'
+import { neon } from '@neondatabase/serverless';
+import 'dotenv/config';
 
-const sql = neon(`${process.env.DATABASE_URL}`);
+
+const connectionString = process.env.DATABASE_URL;
+
+
+if (!connectionString) {
+  throw new Error("DATABASE_URL environment variable is not set.");
+}
+
+const sql = neon(connectionString);
+
 
 export default sql;
+
