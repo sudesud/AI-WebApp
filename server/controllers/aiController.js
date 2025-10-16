@@ -4,9 +4,10 @@ import { clerkClient } from '@clerk/express';
 import axios from 'axios';
 import {v2 as cloudinary} from 'cloudinary'
 import fs from 'fs'
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const pdf = require('pdf-parse');
+import pdf from "pdf-parse-fork";
+
+
+
 
 
 
@@ -99,14 +100,14 @@ export const generateImage = async (req, res) => {
     const { prompt, publish } = req.body;
     const plan = req.plan;
 
-    // 🔒 Premium kontrolü
+    
     if (plan !== 'premium') {
       return res
         .status(403)
         .json({ success: false, message: 'This feature is only available for premium users.' });
     }
 
-    // 🔑 API anahtarı kontrolü
+   
     const apiKey = process.env.STABILITY_API_KEY;
     if (!apiKey) {
       console.error("❌ Missing Stability API Key");
@@ -115,7 +116,7 @@ export const generateImage = async (req, res) => {
         .json({ success: false, message: "Stability AI API key not configured on server." });
     }
 
-    // 🧠 Stability AI isteği (Yeni API endpoint)
+    
     const response = await axios.post(
       "https://api.stability.ai/v2beta/stable-image/generate/core",
       {
@@ -128,14 +129,14 @@ export const generateImage = async (req, res) => {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${apiKey}`,
         },
-        responseType: "arraybuffer", // Görsel binary olarak gelir
+        responseType: "arraybuffer", 
       }
     );
 
-    // 🖼️ Base64 formatına dönüştür
+    
     const base64Image = `data:image/png;base64,${Buffer.from(response.data).toString("base64")}`;
 
-    // ☁️ Cloudinary'e yükle
+   
     const uploadResult = await cloudinary.uploader.upload(base64Image, {
       folder: "ai-images",
       resource_type: "image",
@@ -143,21 +144,21 @@ export const generateImage = async (req, res) => {
 
     const imageUrl = uploadResult.secure_url;
 
-    // 💾 Veritabanına kaydet
+    
     await sql`
       INSERT INTO creations (user_id, prompt, content, type, publish)
       VALUES (${userId}, ${prompt}, ${imageUrl}, 'image', ${publish ?? false})
     `;
 
-    // ✅ Başarılı yanıt
+    
     res.json({ success: true, content: imageUrl });
 
   } catch (error) {
-    // 🔍 Hata ayıklama
+    
     if (error.response) {
-      console.error("❌ Stability API Error:", error.response.status, error.response.data);
+      console.error("Stability API Error:", error.response.status, error.response.data);
     } else {
-      console.error("❌ Server Error:", error.message);
+      console.error("Server Error:", error.message);
     }
 
     res.status(500).json({
@@ -179,17 +180,17 @@ export const removeImageBackground = async (req, res) => {
         const plan = req.plan;
 
         if (plan !== 'premium') {
-            // Geçici dosyayı sil ve sonra yanıt ver
+            
             fs.unlinkSync(imagePath);
             return res.status(403).json({ success: false, message: 'This feature is only available for premium users' });
         }
 
-        // DÜZELTME: Cloudinary'ye gönderilen parametreler basitleştirildi ve düzeltildi.
+        
         const { secure_url } = await cloudinary.uploader.upload(imagePath, {
             effect: "background_removal"
         });
 
-        // Hata kontrolü: secure_url alınamazsa
+        
         if (!secure_url) {
             fs.unlinkSync(imagePath);
             return res.status(500).json({ success: false, message: "Cloudinary failed to process the image." });
@@ -197,7 +198,7 @@ export const removeImageBackground = async (req, res) => {
 
         await sql`INSERT INTO creations (user_id,prompt,content,type) VALUES (${userId},'Remove background from image',${secure_url},'image')`;
         
-        // Geçici dosyayı sil
+        
         fs.unlinkSync(imagePath);
 
         res.json({ success: true, content: secure_url });
@@ -258,6 +259,8 @@ export const resumeReview=async(req,res)=>{
 
         const dataBuffer=fs.readFileSync(resume.path)
         const pdfData=await pdf(dataBuffer)
+        
+
 
         const prompt=`Review the following resume and provide constructive feedback on its strengths,weakness,and areas for improvement.
         Resume content:\n\n ${pdfData.text}`
