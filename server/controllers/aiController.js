@@ -95,79 +95,77 @@ export const generateBlogTitle=async(req,res)=>{
 }
 
 export const generateImage = async (req, res) => {
-  try {
-    const { userId } = req.auth();
-    const { prompt, publish } = req.body;
-    const plan = req.plan;
+    try {
+        const { userId } = req.auth();
+        const { prompt, publish } = req.body;
+        const plan = req.plan;
 
-    
-    if (plan !== 'premium') {
-      return res
-        .status(403)
-        .json({ success: false, message: 'This feature is only available for premium users.' });
+        if (plan !== 'premium') {
+            return res
+                .status(403)
+                .json({ success: false, message: 'This feature is only available for premium users.' });
+        }
+
+        const apiKey = process.env.STABILITY_API_KEY;
+        if (!apiKey) {
+            console.error("❌ Sunucuda STABILITY_API_KEY eksik.");
+            return res
+                .status(500)
+                .json({ success: false, message: "Image generation service is not configured on the server." });
+        }
+
+        // DÜZELTME: Stability AI'ın yeni API'si JSON yerine FormData bekliyor.
+        const formData = new FormData();
+        formData.append('prompt', prompt);
+        formData.append('output_format', 'png');
+        formData.append('aspect_ratio', '1:1');
+
+        // 🧠 Stability AI'a API isteği gönder (FormData ile)
+        const response = await axios.post(
+            "https://api.stability.ai/v2beta/stable-image/generate/core",
+            formData, // JSON objesi yerine FormData gönderiliyor
+            {
+                headers: {
+                    // Axios, FormData için 'Content-Type'ı otomatik olarak ayarlar
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Accept': 'image/*' 
+                },
+                responseType: "arraybuffer",
+            }
+        );
+
+        // 🖼️ Gelen ham veriyi Base64 formatına çevir
+        const base64Image = `data:image/png;base64,${Buffer.from(response.data).toString("base64")}`;
+
+        // ☁️ Base64 formatındaki resmi Cloudinary'e yükle
+        const uploadResult = await cloudinary.uploader.upload(base64Image, {
+            folder: "ai-generated-images",
+        });
+        
+        const imageUrl = uploadResult.secure_url;
+
+        // 💾 Cloudinary URL'sini veritabanına kaydet
+        await sql`
+            INSERT INTO creations (user_id, prompt, content, type, publish)
+            VALUES (${userId}, ${prompt}, ${imageUrl}, 'image', ${publish ?? false})
+        `;
+
+        // ✅ Başarılı yanıtı ve resim URL'sini istemciye gönder
+        res.json({ success: true, content: imageUrl });
+
+    } catch (error) {
+        // 🔍 Detaylı hata yönetimi
+        if (error.response) {
+            console.error("❌ Stability API Hatası:", error.response.status, Buffer.from(error.response.data).toString());
+        } else {
+            console.error("❌ Sunucu Hatası:", error.message);
+        }
+        res.status(500).json({
+            success: false,
+            message: "Failed to generate image. Please check server logs for details.",
+        });
     }
-
-   
-    const apiKey = process.env.STABILITY_API_KEY;
-    if (!apiKey) {
-      console.error("❌ Missing Stability API Key");
-      return res
-        .status(500)
-        .json({ success: false, message: "Stability AI API key not configured on server." });
-    }
-
-    
-    const response = await axios.post(
-      "https://api.stability.ai/v2beta/stable-image/generate/core",
-      {
-        prompt,
-        output_format: "png",
-        aspect_ratio: "1:1"
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`,
-        },
-        responseType: "arraybuffer", 
-      }
-    );
-
-    
-    const base64Image = `data:image/png;base64,${Buffer.from(response.data).toString("base64")}`;
-
-   
-    const uploadResult = await cloudinary.uploader.upload(base64Image, {
-      folder: "ai-images",
-      resource_type: "image",
-    });
-
-    const imageUrl = uploadResult.secure_url;
-
-    
-    await sql`
-      INSERT INTO creations (user_id, prompt, content, type, publish)
-      VALUES (${userId}, ${prompt}, ${imageUrl}, 'image', ${publish ?? false})
-    `;
-
-    
-    res.json({ success: true, content: imageUrl });
-
-  } catch (error) {
-    
-    if (error.response) {
-      console.error("Stability API Error:", error.response.status, error.response.data);
-    } else {
-      console.error("Server Error:", error.message);
-    }
-
-    res.status(500).json({
-      success: false,
-      message: "Failed to generate image. Please check server logs for details.",
-    });
-  }
 };
-
 
 
 export const removeImageBackground = async (req, res) => {

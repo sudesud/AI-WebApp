@@ -14,23 +14,23 @@ const Community = () => {
   const{getToken}=useAuth();
 
   const fetchCreations=async()=>{
-    setCreations(dummyPublishedCreationData)
-    // try {
-    //   const {data}=await axios.get('/api/user/get-published-creations',{
-    //     headers:{
-    //       Authorization:`Bearer ${await getToken()}`
-    //     }
-    //   })
-    //   if(data.success){
-    //     setCreations(data.creations)
-    //   } else{
-    //     toast.error(data.message)
-    //   }
+    
+    try {
+      const {data}=await axios.get('/api/user/get-published-creations',{
+        headers:{
+          Authorization:`Bearer ${await getToken()}`
+        }
+      })
+      if(data.success){
+        setCreations(data.creations)
+      } else{
+        toast.error(data.message)
+      }
       
-    // } catch (error) {
-    //   toast.error(error.message)
-    // }
-    // setLoading(false)
+    } catch (error) {
+      toast.error(error.message)
+    }
+    setLoading(false)
   }
 
   const imageLikeToggle= async (id)=>{
